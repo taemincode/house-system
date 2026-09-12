@@ -1,0 +1,352 @@
+.section-heading {
+  font-size:clamp(22px,2vw,26px);
+  margin:26px 0 16px;
+}
+
+.house-hero {
+  margin-top:30px;
+  background:var(--house);
+  padding:28px 28px 24px;
+  border-radius:5px;
+  overflow:hidden;
+}
+
+.hero-top {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:24px;
+}
+
+.hero-top h1 {
+  font-size:clamp(40px,7vw,90px);
+  font-weight:800;
+  letter-spacing:-.06em;
+  line-height:.95;
+}
+
+.crest {
+  width:150px;
+  height:150px;
+  object-fit:contain;
+  background:#fff;
+  border-radius:50%;
+  padding:10px;
+  flex-shrink:0;
+}
+
+.house-stats {
+  display:flex;
+  gap:40px;
+  align-items:end;
+  margin-top:28px;
+}
+
+.standing-link:focus-visible .stat-value {
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:6px;
+}
+
+.stat-value {
+  font-size:48px;
+  font-weight:800;
+  letter-spacing:-2.8px;
+  line-height:1.1;
+  font-variant-numeric:tabular-nums;
+}
+
+.stat-value sup {
+  font-size:20px;
+  letter-spacing:-1px;
+}
+
+.stat-label {
+  font-size:16px;
+  font-weight:700;
+  margin-top:8px;
+}
+
+.recent-results {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px 18px;
+}
+
+.recent-result {
+  border-top:3px solid var(--ink);
+  padding-top:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  gap:15px;
+}
+
+.recent-result h3 {
+  font-size:20px;
+  letter-spacing:-.8px;
+  line-height:1.2;
+}
+
+.recent-result p {
+  font-size:16px;
+  margin-top:10px;
+}
+
+.result-points {
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:-2.3px;
+  line-height:1;
+  white-space:nowrap;
+}
+
+.staff-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px 16px;
+}
+
+.portrait {
+  aspect-ratio:2;
+  background:var(--soft);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:4px;
+  overflow:hidden;
+}
+
+.portrait svg {
+  width:28px;
+  height:28px;
+  opacity:.35;
+}
+
+.portrait img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.staff-head .portrait {
+  background:var(--tint);
+}
+
+.staff-member h3 {
+  font-size:18px;
+  margin-top:12px;
+}
+
+.staff-member p {
+  font-size:16px;
+  margin-top:9px;
+}
+
+.trophy-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+
+.trophy-placeholder {
+  height:170px;
+  position:relative;
+  background:var(--soft);
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.trophy-placeholder svg {
+  width:66px;
+  height:66px;
+  opacity:.4;
+  transform:translateY(-18px);
+}
+
+.trophy-placeholder img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.trophy-plinth {
+  position:absolute;
+  bottom:28px;
+  left:50%;
+  width:106px;
+  height:20px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:#d5d8d9;
+  box-shadow:0 11px 0 #c3c7c9,0 22px 23px #0001;
+}
+
+.trophy-grid figcaption {
+  font-size:20px;
+  font-weight:700;
+  line-height:1.35;
+  letter-spacing:-.6px;
+  margin-top:14px;
+}
+
+.trophy-model {
+  display:block;
+  width:100%;
+  height:300px;
+  background:var(--soft);
+  border-radius:8px;
+}
+
+.trophy-model-status {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  padding:24px;
+  color:#666;
+  text-align:center;
+}
+
+.trophy-obj {
+  position:relative;
+}
+
+.trophy-obj canvas {
+  display:block;
+  width:100%;
+  height:100%;
+  border-radius:inherit;
+  cursor:grab;
+}
+
+.trophy-obj canvas:active {
+  cursor:grabbing;
+}
+
+.trophy-obj canvas:focus-visible {
+  outline:3px solid #1647b5;
+  outline-offset:2px;
+}
+
+.trophy-controls {
+  font-size:14px;
+  line-height:1.5;
+  color:#555;
+  margin-top:10px;
+}
+
+.trophy-hint {
+  margin:-6px 0 18px;
+  font-size:14px;
+  line-height:1.5;
+  color:#555;
+}
+
+@media(max-width:700px) {
+  .trophy-grid:has(.trophy-model) {
+    grid-template-columns:1fr;
+  }
+  .trophy-model {
+    height:250px;
+  }
+  .house-hero {
+    padding:22px 18px;
+    margin-top:30px;
+  }
+  .hero-top h1 {
+    font-size:clamp(36px,7.5vw,52px);
+  }
+  .crest {
+    width:60px;
+    height:60px;
+    padding:7px;
+  }
+  .house-stats {
+    gap:30px;
+    margin-top:22px;
+  }
+  .stat-value {
+    font-size:34px;
+    letter-spacing:-2.5px;
+  }
+  .stat-value sup {
+    font-size:18px;
+  }
+  .stat-label {
+    font-size:16px;
+  }
+  .recent-results {
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+  .recent-result {
+    padding-top:17px;
+  }
+  .recent-result h3 {
+    font-size:20px;
+  }
+  .recent-result p {
+    font-size:16px;
+  }
+  .result-points {
+    font-size:28px;
+  }
+  .staff-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px 14px;
+  }
+  .portrait {
+    aspect-ratio:2;
+  }
+  .staff-member h3 {
+    font-size:16px;
+  }
+  .staff-member p {
+    font-size:14px;
+  }
+  .trophy-grid {
+    gap:16px;
+  }
+  .trophy-placeholder {
+    height:124px;
+  }
+  .trophy-placeholder svg {
+    width:54px;
+    height:54px;
+  }
+  .trophy-plinth {
+    width:72px;
+    height:13px;
+    bottom:20px;
+  }
+  .trophy-grid figcaption {
+    font-size:16px;
+  }
+}
+
+@media(max-width:380px) {
+  .hero-top {
+    gap:12px;
+  }
+  .hero-top h1 {
+    font-size:36px;
+  }
+  .crest {
+    width:60px;
+    height:60px;
+  }
+  .house-hero {
+    padding:22px 18px;
+  }
+  .stat-value {
+    font-size:30px;
+  }
+  .trophy-grid {
+    grid-template-columns:1fr;
+  }
+}

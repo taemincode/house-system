@@ -1,0 +1,150 @@
+[
+  {
+    "id": "rivers",
+    "name": "Rivers",
+    "logo": "images/houses/rivers.png",
+    "teachers": [
+      {
+        "name": null,
+        "image": null,
+        "is_head": true
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      }
+    ]
+  },
+  {
+    "id": "castles",
+    "name": "Castles",
+    "logo": "images/houses/castles.png",
+    "teachers": [
+      {
+        "name": null,
+        "image": null,
+        "is_head": true
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      }
+    ]
+  },
+  {
+    "id": "forests",
+    "name": "Forests",
+    "logo": "images/houses/forests.png",
+    "teachers": [
+      {
+        "name": null,
+        "image": null,
+        "is_head": true
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      }
+    ]
+  },
+  {
+    "id": "bridges",
+    "name": "Bridges",
+    "logo": "images/houses/bridges.png",
+    "teachers": [
+      {
+        "name": null,
+        "image": null,
+        "is_head": true
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      },
+      {
+        "name": null,
+        "image": null,
+        "is_head": false
+      }
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+{% extends 'admin/base.html' %}{% block content %}
+<div class="page-heading"><div><h1>Teacher accounts</h1><p class="intro">Individual logins for giving digital coins.</p></div><a class="button primary" href="{{ url_for('admin.account_edit') }}">+ New account</a></div>
+{% for account in accounts %}<article class="item"><div><h2>{{ account.display_name }}</h2><p>{{ account.username }} · <span class="badge">{{ 'Active' if account.active else 'Inactive' }}</span>{% if account.must_change %} · Password change required{% endif %}</p></div><div class="actions"><a class="button secondary" href="{{ url_for('admin.awards',teacher=account.id) }}">Awards</a><a class="button secondary" href="{{ url_for('admin.account_edit',account_id=account.id) }}">Edit</a></div></article>{% else %}<p class="empty">No accounts yet. Create one and share its login details privately.</p>{% endfor %}
+<div class="actions">{% if page > 1 %}<a class="button secondary" href="{{ url_for('admin.accounts',page=page-1) }}">Previous</a>{% endif %}{% if more %}<a class="button secondary" href="{{ url_for('admin.accounts',page=page+1) }}">Next</a>{% endif %}</div>
+{% endblock %}

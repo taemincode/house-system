@@ -1,0 +1,16 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<section class="login-card">
+  <span class="eyebrow">Website management</span>
+  <h1>Welcome back.</h1>
+  <p class="intro">Enter your admin password to continue.</p>
+  {% if error %}<div class="notice error" role="alert">{{ error }}</div>{% endif %}
+  {% if configured %}
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <label class="field"><span>Password</span><input type="password" name="password" autocomplete="current-password" required autofocus maxlength="1024"></label>
+    <button class="button primary wide" type="submit">Log in →</button>
+  </form>
+  {% else %}<div class="notice">Admin access has not been set up yet. Ask the website owner to set the admin password.</div>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">Website management</span><h1>Dashboard</h1><p class="intro">Keep your house community up to date.</p></div></div>
+<div class="dashboard-grid">
+{% for endpoint, label, unit, description in [('events','Events','events','Create upcoming events and publish results.'),('houses','Teachers','teachers','Manage the teachers in each house.'),('standings','Coin counts','entries','Add coins to each house or correct a previous entry.'),('trophies','Trophies','awards','Add awards with an image or a 3D trophy.'),('accounts','Teacher accounts','accounts','Create logins, reset passwords and manage access.'),('awards','Award history','digital awards','Review and correct digital coin awards.')] %}
+<a class="dashboard-card" href="{{ url_for('admin.' + endpoint) }}"><div class="card-top"><span class="count">{{ counts[endpoint] }}</span><span aria-hidden="true">↗</span></div><span class="muted">{{ unit }}</span><h2>{{ label }}</h2><p>{{ description }}</p></a>
+{% endfor %}
+</div>
+<p class="footnote">Saved changes appear on the website immediately.</p>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% from 'partials/awards.html' import entries %}
+<section class="today-panel{{ ' ' ~ daily['items'][0].house if daily['items'] else '' }}" aria-label="Today’s coins" aria-roledescription="carousel" data-today-feed="{{ url_for('public_coins.today') }}" data-period="{{ daily.period }}" data-revision="{{ daily.revision }}" data-next="{{ daily.next or '' }}" data-items="{{ daily['items']|tojson|forceescape }}">
+  <div class="today-stage" aria-live="off" aria-atomic="true" {% if not daily['items'] %}hidden{% endif %}>{{ entries(daily['items'][:1], emphasize=true) }}</div>
+  <p class="coin-empty" data-feed-empty {% if daily['items'] %}hidden{% endif %}>No coins awarded today yet.</p>
+</section>

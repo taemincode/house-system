@@ -1,0 +1,5 @@
+{% extends 'admin/base.html' %}{% from 'admin/macros.html' import delete_form with context %}
+{% block content %}
+<div class="page-heading"><div><h1>Trophies</h1><p class="intro">Celebrate each house’s achievements with an image or a 3D trophy.</p></div><a class="button primary" href="{{ url_for('admin.trophy_edit') }}">+ New trophy</a></div>
+<div class="item-list">{% for trophy in trophies %}<article class="item"><div><span class="badge">{{ trophy.house|capitalize }} · {{ trophy.year }}</span><h2>{{ trophy.title }}</h2><p class="muted">{{ '3D model' if trophy.obj or trophy.model else 'Image' if trophy.image else 'Placeholder' }}</p></div><div class="actions"><a class="button secondary" href="{{ url_for('admin.trophy_edit',index=loop.index0) }}">Edit</a>{{ delete_form('admin.trophy_delete','trophies','Delete this trophy award?',{'index':loop.index0}) }}</div></article>{% else %}<div class="empty">No trophies yet. Add an award above.</div>{% endfor %}</div>
+{% endblock %}

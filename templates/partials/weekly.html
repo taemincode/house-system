@@ -1,0 +1,5 @@
+{% from 'partials/awards.html' import entries %}
+<section class="weekly-coins {{ house.id }}" aria-labelledby="weekly-title" data-feed="{{ url_for('public_coins.week', house=house.id) }}" data-period="{{ weekly.period }}" data-revision="{{ weekly.revision }}" data-next="{{ weekly.next or '' }}">
+<div class="weekly-heading"><div><h2 id="weekly-title" class="section-heading">This week’s coins</h2><p>Digital coins · Monday to Sunday</p></div><strong class="weekly-total"><span data-feed-total>{{ weekly.total|number }}</span><small>coins</small></strong></div>
+<button class="new-awards coin-button secondary" type="button" hidden>New awards</button><div data-feed-list>{{ entries(weekly['items']) }}</div><p class="coin-empty" data-feed-empty {% if weekly['items'] %}hidden{% endif %}>No digital coins for {{ house.name }} this week yet.</p><button class="feed-more" type="button" {% if not weekly.next %}hidden{% endif %}>Show more</button>
+</section>

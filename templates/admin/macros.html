@@ -1,0 +1,20 @@
+{% macro tokens(name) -%}
+<input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+<input type="hidden" name="_version" value="{{ request.form.get('_version', data_version(name)) }}">
+{%- endmacro %}
+{% macro field(name, label, value='', type='text', required=false, help='', min=none, max=none, maxlength=200) -%}
+<label class="field"><span>{{ label }}{% if required %} <span class="required" aria-hidden="true">*</span>{% endif %}</span>
+<input type="{{ type }}" name="{{ name }}" value="{{ request.form.get(name, value if value is not none else '') }}" {% if required %}required{% endif %} {% if min is not none %}min="{{ min }}"{% endif %} {% if max is not none %}max="{{ max }}"{% endif %} {% if type == 'number' %}step="1"{% endif %} maxlength="{{ maxlength }}">
+{% if help %}<small>{{ help }}</small>{% endif %}</label>
+{%- endmacro %}
+{% macro assets(name, label, current='', accept='', required=true) -%}
+<div class="asset-field">
+<label class="field"><span>{{ label }}{% if required %} <span class="required" aria-hidden="true">*</span>{% endif %}</span>
+<input type="file" name="{{ name }}_upload" accept="{{ accept }}" {% if required and not image_exists(current) %}data-required{% endif %}>
+{% if image_exists(current) %}<small>Current file: {{ current.split('/')[-1] }}. Leave this empty to keep it, or upload a replacement.</small>{% else %}<small>Upload {{ label.lower() }}. Maximum 40 MB per save.</small>{% endif %}
+</label>
+</div>
+{%- endmacro %}
+{% macro delete_form(endpoint, name, message, kwargs={}) -%}
+<form method="post" action="{{ url_for(endpoint, **kwargs) }}" data-confirm="{{ message }}">{{ tokens(name) }}<button class="button danger" type="submit">Delete</button></form>
+{%- endmacro %}

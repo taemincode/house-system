@@ -1,0 +1,16 @@
+{% extends 'admin/base.html' %}{% from 'admin/macros.html' import tokens, field, assets with context %}
+{% block content %}
+<div class="page-heading"><div><a class="back-link" href="{{ url_for('admin.trophies') }}">← Trophies</a><h1>{{ title }}</h1><p class="intro">House, school year, title, and trophy files are required.</p></div></div>
+<form method="post" enctype="multipart/form-data" class="editor">{{ tokens('trophies') }}
+<div class="panel form-grid">
+<label class="field"><span>House *</span><select name="house" required><option value="">Choose a house</option>{% for house in houses %}<option value="{{ house.id }}" {% if request.form.get('house',trophy.get('house','')) == house.id %}selected{% endif %}>{{ house.name }}</option>{% endfor %}</select></label>
+<label class="field"><span>School year *</span><select name="year" required><option value="">Choose a school year</option>{% for year in years %}<option value="{{ year }}" {% if request.form.get('year',trophy.get('year','')) == year %}selected{% endif %}>{{ year }}</option>{% endfor %}</select></label>
+{{ field('title','Trophy title',trophy.get('title',''),required=true,help='For example: House System or Sports Day.',maxlength=120) }}
+<label class="field"><span>Display as *</span><select name="kind" required data-switch="trophy-kind">{% for value,label in [('image','Image'),('3d','3D model (OBJ + MTL)')] %}<option value="{{ value }}" {% if request.form.get('kind','3d' if trophy.get('obj') or trophy.get('model') else 'image') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+</div>
+<fieldset class="panel" data-switch-group="trophy-kind" data-switch-value="image"><legend>Trophy image</legend>{{ assets('image','Image',trophy.get('image',''),'.png,.jpg,.jpeg,.webp') }}</fieldset>
+<fieldset class="panel" data-switch-group="trophy-kind" data-switch-value="3d"><legend>3D trophy files</legend><p class="muted">Choose both files from the same Tinkercad export: the OBJ shape and its MTL colors. GLB files are not accepted.</p>{% if trophy.get('model') %}<div class="notice">This award currently uses an older 3D file. Choose an image or both OBJ and MTL files to save an update. Cancel to leave it as it is.</div>{% endif %}{{ assets('obj','OBJ file',trophy.get('obj',''),'.obj') }}{{ assets('mtl','MTL file',trophy.get('mtl',''),'.mtl') }}</fieldset>
+<p class="footnote">If a file upload fails, select the file again before saving.</p>
+<div class="form-actions"><a class="button secondary" href="{{ url_for('admin.trophies') }}">Cancel</a><button class="button primary" type="submit">Save trophy</button></div>
+</form>
+{% endblock %}

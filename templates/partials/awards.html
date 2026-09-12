@@ -1,0 +1,3 @@
+{% macro entries(items, emphasize=false) %}
+{% for item in items %}<article class="coin-entry {{ item.house }}" data-award-id="{{ item.id }}"><strong class="coin-amount">+{{ item.amount }}</strong><div><p>{% if emphasize %}{% for part in item.message_parts %}{% if part.bold %}<strong>{{ part.text }}</strong>{% else %}{{ part.text }}{% endif %}{% endfor %}{% else %}{{ item.message }}{% endif %}</p><time datetime="{{ item.datetime }}" data-timestamp="{{ item.timestamp }}">{{ item.time }}</time></div></article>{% endfor %}
+{% endmacro %}

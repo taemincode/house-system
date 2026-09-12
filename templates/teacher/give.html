@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="teacher-workspace"><h1 class="page-title">Give coins</h1><p class="teacher-intro">A small reward. A big difference.</p>
+{% if saved %}<p class="coin-notice success" role="status">{% if saved.reversed_at %}This award was already recorded and has been reversed.{% else %}{{ saved.amount }} {{ 'coin' if saved.amount == 1 else 'coins' }} given to {{ saved.student }} · {{ saved.house|capitalize }}.{% endif %}</p>{% endif %}
+{% if error %}<p class="coin-notice error" role="alert">{{ error }}</p>{% endif %}
+<form method="post" class="coin-form award-form"><input type="hidden" name="_csrf" value="{{ teacher_csrf() }}"><input type="hidden" name="submission_key" value="{{ submission_key }}">
+<label>Student’s name<input name="student" required maxlength="120" autocomplete="off" value="{{ request.form.get('student','') }}"></label>
+<fieldset class="house-picker"><legend>Student’s house</legend><div>{% for h in houses %}<label class="house-choice {{ h.id }}"><input type="radio" name="house" value="{{ h.id }}" required {% if request.form.get('house') == h.id %}checked{% endif %}><span><img src="{{ url_for('static', filename=h.logo) }}" alt="" width="40" height="40">{{ h.name }}</span></label>{% endfor %}</div></fieldset>
+<div class="award-fields"><label>Number of coins<input type="number" name="amount" min="1" max="{{ limit }}" step="1" required value="{{ request.form.get('amount','1') }}"><small>1–{{ limit }} coins per award</small></label>
+<label>Reason <span class="optional">optional</span><input name="reason" maxlength="240" placeholder="helping a classmate in Spanish" value="{{ request.form.get('reason','') }}"></label></div>
+<p class="coin-reminder">Names and reasons appear publicly. Give a digital coin or a physical coin for an action, never both.</p>
+<button class="coin-button primary give-button" type="submit">Give <span data-give-amount>1 coin</span></button>
+</form></div>{% endblock %}

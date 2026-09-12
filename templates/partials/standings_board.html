@@ -1,0 +1,26 @@
+{% from 'partials/coin_total.html' import coin_total %}
+{% macro movement(row) %}
+{% if row.movement is not none %}<span class="movement" title="{% if row.movement > 0 %}Up {{ row.movement }} place(s){% elif row.movement < 0 %}Down {{ -row.movement }} place(s){% else %}Rank unchanged{% endif %} since last update"><span aria-hidden="true">{% if row.movement > 0 %}↑{{ row.movement }}{% elif row.movement < 0 %}↓{{ -row.movement }}{% else %}—{% endif %}</span><span class="sr-only">{% if row.movement > 0 %}Up {{ row.movement }} place(s){% elif row.movement < 0 %}Down {{ -row.movement }} place(s){% else %}Rank unchanged{% endif %}</span></span>{% endif %}
+{% endmacro %}
+{% macro score(row) %}
+<div class="score-line"><span class="score">{{ coin_total(row.total) }}</span>{% if row.gain is not none %}<span class="gain {% if row.gain == 0 %}zero{% elif row.gain < 0 %}negative{% endif %}" aria-label="{{ row.gain|signed }} coins since last update">({{ row.gain|signed }})</span>{% endif %}</div>
+{% endmacro %}
+
+<h1 class="page-title">House standings</h1>
+<p class="comparison">{% if board.previous_date %}Changes since {{ board.baseline_at|warsawtime }}{% else %}Latest coin count{% endif %}</p>
+{% if board.complete and not board.tied %}
+<div class="podium" aria-label="House rankings">
+  {% for index, size in [(1, 'second'), (0, 'first'), (2, 'third')] %}{% set row = board.rows[index] %}
+  <a href="{{ url_for('house', slug=row.id) }}" class="podium-column {{ size }} {{ row.id }}">
+    <h2 class="house-name">{{ row.name }}</h2>{{ score(row) }}
+    <div class="step"><div class="rank-group"><span class="position">{{ row.rank }}</span>{{ movement(row) }}</div></div>
+  </a>
+  {% endfor %}
+</div>
+{% set row = board.rows[3] %}
+<a href="{{ url_for('house', slug=row.id) }}" class="fourth {{ row.id }}"><div class="rank-group"><span class="position">{{ row.rank }}</span>{{ movement(row) }}</div><h2 class="house-name">{{ row.name }}</h2>{{ score(row) }}</a>
+{% else %}
+{% if not board.complete %}<p class="empty-state">The next house count is on its way.</p>{% endif %}
+<div class="standing-list">{% for row in board.rows %}<a class="fourth {{ row.id }}" href="{{ url_for('house', slug=row.id) }}"><div class="rank-group"><span class="position">{{ row.rank|number }}</span>{{ movement(row) }}</div><h2 class="house-name">{{ row.name }}</h2>{{ score(row) }}</a>{% endfor %}</div>
+{% endif %}
+{% if board.date %}<p class="update-date">Manual count <time datetime="{{ board.date }}">{{ board.date|dateformat('%d %B %Y') }}</time></p>{% endif %}

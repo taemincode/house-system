@@ -1,0 +1,13 @@
+{% extends 'admin/base.html' %}{% from 'admin/macros.html' import tokens with context %}
+{% block content %}
+<div class="page-heading"><div><h1>Coin counts</h1><p class="intro">{{ board.school_year }} · Record the coins added to each house.</p></div><a class="button primary" href="{{ url_for('admin.count_edit') }}">+ Add coins</a></div>
+<div class="notice">Enter physical/event coins added only. Digital awards count separately and must not be entered again. Totals are calculated automatically. Editing or deleting an entry recalculates all later totals.</div>
+<div class="item-list">
+{% for index, count in counts %}
+<article class="panel"><div class="panel-heading"><div><h2>{{ count.date|dateformat('%d %B %Y') }}</h2>{% if loop.first %}<span class="badge upcoming">Latest entry</span>{% endif %}</div><a class="button secondary" href="{{ url_for('admin.count_edit',index=index) }}">Edit added coins</a></div>
+<div class="count-grid">{% for house in houses %}<div><span class="muted">{{ house.name }}</span><strong>{{ count.added.get(house.id)|signed if count.added.get(house.id) is not none else '—' }}</strong><span class="muted">Total: {{ count.totals.get(house.id)|number }}</span></div>{% endfor %}</div>
+<details class="delete-disclosure"><summary>Delete this entry</summary><form method="post" action="{{ url_for('admin.count_delete',index=index) }}" data-confirm="Are you sure you want to delete this entry? Its added coins will be removed and all later totals will be recalculated.">{{ tokens('standings') }}<label class="check"><input type="checkbox" name="confirmed" value="yes" required>Yes, remove the coins added on {{ count.date|dateformat('%d %B %Y') }}.</label><button class="button danger" type="submit">Delete entry</button></form></details>
+</article>
+{% else %}<div class="empty">No entries yet. Add the first coins above.</div>{% endfor %}
+</div>
+{% endblock %}

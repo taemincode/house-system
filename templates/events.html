@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/events.css') }}">{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/events.js') }}" defer></script>{% endblock %}
+{% macro event_details(event) %}<div class="event-details"><p>{{ event.description }}</p><p><strong>{{ event.time or 'Time to come' }} · {{ event.location or 'Location to come' }}</strong></p><div class="prizes">{% for prize in event.prizes %}<span>{{ prize.place|ordinal }} · {{ prize.coins }} coins</span>{% endfor %}</div></div>{% endmacro %}
+{% block content %}
+<div class="page-heading"><h1 class="page-title">Events</h1><nav class="event-tabs" aria-label="Event views"><a href="{{ url_for('events', view='upcoming') }}" data-view="upcoming" {% if view == 'upcoming' %}aria-current="page"{% endif %}>Upcoming</a><a href="{{ url_for('events', view='results') }}" data-view="results" {% if view == 'results' %}aria-current="page"{% endif %}>Results</a></nav></div>
+<section id="upcoming" aria-label="Upcoming events" {% if view != 'upcoming' %}hidden{% endif %}>
+{% for event in upcoming %}
+<details id="{{ event.id }}" class="event-disclosure {{ 'featured-event' if loop.first else 'event-line' }}">
+  {% if loop.first %}<summary class="feature"><div><time class="event-date" datetime="{{ event.date or '' }}">{{ event.date|dateformat('%d %b · %a')|upper }}</time><h2>{{ event.name }}</h2><p class="feature-place">{{ event.time or 'Time to come' }} · {{ event.location or 'Location to come' }}</p></div><div class="feature-side"><span class="reward">{% if event.prizes %}Win <strong>{{ event.prizes|map(attribute='coins')|max }}</strong> coins{% else %}Prizes to come{% endif %}</span><span class="open-arrow" aria-hidden="true">↗</span></div></summary>
+  {% else %}<summary class="event-button"><time class="calendar" datetime="{{ event.date or '' }}">{{ event.date|dateformat('%b') }}<strong>{{ event.date|dateformat('%d') }}</strong></time><h2>{{ event.name }}</h2><span class="line-reward">{% if event.prizes %}Win {{ event.prizes|map(attribute='coins')|max }} coins{% else %}Prizes to come{% endif %}</span><span class="line-arrow" aria-hidden="true">↗</span></summary>{% endif %}
+  {{ event_details(event) }}
+</details>
+{% else %}<p class="empty-state">More house events are on the way.</p>{% endfor %}
+</section>
+<section id="results" aria-label="Event results" {% if view != 'results' %}hidden{% endif %}>
+{% for event in results %}<article class="event-result" id="{{ event.id }}"><div class="result-heading"><h2>{{ event.name }}</h2><p><time datetime="{{ event.date }}">{{ event.date|dateformat|upper }}</time> · Coins earned</p></div><div class="event-scores">{% for result in event.results|sort(attribute='place') %}{% set team = house_lookup[result.house] %}<a class="event-score {{ team.id }}" href="{{ url_for('house', slug=team.id) }}"><h3>{{ team.name }}</h3><div class="amount">{{ '+' if result.coins else '' }}{{ result.coins|number }}</div><div>{{ result.place|ordinal }}</div></a>{% endfor %}</div></article>{% else %}<p class="empty-state">Results will appear after the first event.</p>{% endfor %}</section>
+{% endblock %}

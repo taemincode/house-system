@@ -1,0 +1,279 @@
+.page-title {
+  font-size:clamp(32px,3.5vw,48px);
+  margin:26px 0 14px;
+}
+
+.comparison {
+  font-size:16px;
+  margin:0 0 22px;
+}
+
+.podium {
+  display:grid;
+  grid-template-columns:1fr 1.1fr 1fr;
+  gap:18px;
+  align-items:end;
+}
+
+.podium-column {
+  min-width:0;
+  text-align:center;
+}
+
+.house-name {
+  font-size:clamp(20px,2vw,32px);
+  font-weight:700;
+  letter-spacing:-1.4px;
+  line-height:1.15;
+}
+
+.score-line {
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:10px 0 18px;
+}
+
+.score {
+  font-size:clamp(32px,3.5vw,44px);
+  font-weight:800;
+  line-height:1.1;
+  letter-spacing:-.055em;
+  font-variant-numeric:tabular-nums;
+}
+
+.gain {
+  white-space:nowrap;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:-.5px;
+  color:#08723f;
+}
+
+.gain.zero {
+  color:#656565;
+}
+
+.gain.negative {
+  color:#a92430;
+}
+
+.step {
+  background:var(--house);
+  border-radius:7px 7px 0 0;
+  height:var(--height);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.first {
+  --height:280px;
+}
+
+.second {
+  --height:220px;
+}
+
+.third {
+  --height:195px;
+}
+
+.rank-group {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+}
+
+.position {
+  font-size:clamp(48px,6vw,72px);
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-.07em;
+}
+
+.movement {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:#ffffffa6;
+  border-radius:7px;
+  padding:10px;
+  font-size:20px;
+  font-weight:700;
+  line-height:1;
+  white-space:nowrap;
+}
+
+.fourth {
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:20px;
+  align-items:center;
+  margin-top:16px;
+  padding:30px 18px;
+  border-left:10px solid var(--house);
+  background:#f3f3f1;
+}
+
+.fourth .position {
+  font-size:34px;
+}
+
+.fourth .rank-group {
+  flex-direction:row;
+  gap:12px;
+}
+
+.fourth .movement {
+  font-size:18px;
+  padding:8px;
+  background:#fff;
+}
+
+.fourth .score-line {
+  margin:0;
+  justify-content:flex-end;
+  gap:8px;
+}
+
+.fourth .score {
+  font-size:36px;
+}
+
+.update-date {
+  font-size:14px;
+  color:#666;
+  margin-top:14px;
+}
+
+.standing-list .fourth {
+  margin-top:16px;
+}
+
+@media(max-width:900px) {
+  .podium {
+    gap:16px;
+  }
+  .first {
+    --height:170px;
+  }
+  .second {
+    --height:120px;
+  }
+  .third {
+    --height:84px;
+  }
+  .rank-group {
+    gap:12px;
+  }
+  .movement {
+    padding:10px;
+    font-size:22px;
+  }
+}
+
+@media(max-width:550px) {
+  .comparison {
+    font-size:18px;
+    margin-bottom:32px;
+  }
+  .podium {
+    gap:8px;
+  }
+  .house-name {
+    font-size:20px;
+    letter-spacing:-.7px;
+  }
+  .score-line {
+    gap:4px;
+    margin:10px 0 18px;
+  }
+  .score {
+    font-size:clamp(20px,5.2vw,28px);
+  }
+  .gain {
+    font-size:12px;
+  }
+  .position {
+    font-size:48px;
+  }
+  .movement {
+    font-size:16px;
+    padding:7px;
+    border-radius:5px;
+  }
+  .rank-group {
+    gap:7px;
+  }
+  .first {
+    --height:155px;
+  }
+  .second {
+    --height:110px;
+  }
+  .third {
+    --height:78px;
+  }
+  .fourth {
+    padding:16px 12px;
+    gap:18px;
+    margin-top:22px;
+    border-left-width:9px;
+  }
+  .fourth .position {
+    font-size:32px;
+  }
+  .fourth .house-name {
+    font-size:22px;
+  }
+  .fourth .score {
+    font-size:26px;
+  }
+  .fourth .movement {
+    font-size:17px;
+    padding:7px;
+  }
+  .fourth .score-line {
+    gap:4px;
+  }
+}
+
+@media(max-width:360px) {
+  .podium .house-name {
+    font-size:18px;
+  }
+  .podium .score {
+    font-size:20px;
+  }
+  .podium .position {
+    font-size:42px;
+  }
+  .podium .rank-group {
+    gap:4px;
+  }
+  .fourth {
+    gap:12px;
+  }
+  .fourth .house-name {
+    font-size:18px;
+  }
+}
+
+/* Leave room for the three-entry activity panel on laptop-height screens. */
+@media(min-width:1000px) and (max-height:850px) {
+  .page-title {font-size:36px;margin:20px 0 10px}
+  .comparison {font-size:14px;margin-bottom:14px}
+  .house-name {font-size:24px}
+  .score {font-size:36px}
+  .score-line {margin:8px 0 12px}
+  .first {--height:130px}
+  .second {--height:100px}
+  .third {--height:80px}
+  .position {font-size:54px}
+  .fourth {padding:16px 18px}
+  .fourth .score {font-size:32px}
+}

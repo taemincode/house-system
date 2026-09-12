@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% from 'partials/icons.html' import person, trophy %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/house.css') }}">{% endblock %}
+{% block scripts %}
+{% if has_glb_trophies %}
+<script type="module" src="{{ url_for('static', filename='js/model-viewer.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/trophies.js') }}" defer></script>
+{% endif %}
+{% if has_obj_trophies %}
+<script type="importmap">{"imports":{"three":{{ url_for('static', filename='js/vendor/three/three.module.min.js')|tojson }}}}</script>
+<script type="module" src="{{ url_for('static', filename='js/obj-trophies.js') }}"></script>
+{% endif %}
+{% endblock %}
+{% block content %}
+<section class="house-hero {{ house.id }}" aria-label="{{ house.name }} overview">
+  <div class="hero-top"><h1>{{ house.name }}</h1>{% if image_exists(house.logo) %}<img class="crest" src="{{ url_for('static', filename=house.logo) }}" alt="{{ house.name }} house crest">{% endif %}</div>
+  <div class="house-stats"><div><div class="stat-value" data-house-total="{{ house.id }}">{{ house.total|number }}</div><div class="stat-label">Coins</div></div><a class="standing-link" href="{{ url_for('standings') }}" aria-label="{{ house.rank|ordinal if house.rank else 'Unranked' }} place — view house standings"><div class="stat-value" data-house-rank="{{ house.id }}">{% if house.rank %}{{ house.rank }}<sup>{{ (house.rank|ordinal)[-2:] }}</sup>{% else %}—{% endif %}</div><div class="stat-label">Place</div></a></div>
+</section>
+<section aria-labelledby="recent-title"><h2 id="recent-title" class="section-heading">Recent results</h2>
+<div class="recent-results">{% for result in recent %}<a class="recent-result" href="{{ url_for('events', view='results') }}#{{ result.event.id }}"><div><h3>{{ result.event.name }}</h3><p>{{ result.place|ordinal }} place</p></div><span class="result-points" aria-label="{{ result.coins }} coins">{{ '+' if result.coins else '' }}{{ result.coins|number }}</span></a>{% else %}<p>No results yet.</p>{% endfor %}</div></section>
+{% include 'partials/weekly.html' %}
+<section aria-labelledby="teachers-title"><h2 id="teachers-title" class="section-heading">Teachers</h2>
+<div class="staff-grid">{% for teacher in house.teachers %}<article class="staff-member {{ 'staff-head' if teacher.is_head else '' }}"><div class="portrait {{ house.id }}">{% if image_exists(teacher.image) %}<img src="{{ url_for('static', filename=teacher.image) }}" alt="{{ teacher.name }}" loading="lazy">{% else %}{{ person() }}{% endif %}</div><h3>{{ teacher.name or 'Name to come' }}</h3>{% if teacher.is_head %}<p>Head of {{ house.name }}</p>{% endif %}</article>{% endfor %}</div></section>
+{% if trophies %}
+<section aria-labelledby="trophies-title">
+  <h2 id="trophies-title" class="section-heading">Trophies</h2>
+  {% if has_glb_trophies or has_obj_trophies %}<p class="trophy-hint">Drag to rotate · Scroll or pinch to zoom</p>{% endif %}
+  <div class="trophy-grid">
+    {% for award in trophies %}
+    <figure>
+      {% if image_exists(award.obj) and image_exists(award.mtl) %}
+      <div class="trophy-model trophy-obj" data-obj="{{ url_for('static', filename=award.obj) }}" data-mtl="{{ url_for('static', filename=award.mtl) }}" data-up="{{ award.up_axis|default('z') }}" data-label="{{ house.name }} {{ award.year }} {{ award.title }} trophy">
+        <div class="trophy-model-status" role="status">Loading 3D trophy…</div>
+      </div>
+      <noscript><p class="trophy-controls">Enable JavaScript to view the trophy in 3D.</p></noscript>
+      {% elif award.model and image_exists(award.model) %}
+      <model-viewer class="trophy-model" src="{{ url_for('static', filename=award.model) }}" alt="{{ house.name }} {{ award.year }} {{ award.title }} trophy" camera-orbit="0deg 65deg auto" camera-controls touch-action="pan-y" shadow-intensity="1" loading="lazy" interaction-prompt="none">
+        <div slot="poster" class="trophy-model-status">3D trophy preview</div>
+      </model-viewer>
+      <noscript><p class="trophy-controls">Enable JavaScript to view the trophy in 3D.</p></noscript>
+      {% else %}
+      <div class="trophy-placeholder" role="img" aria-label="{{ award.title }} trophy{% if not image_exists(award.image) %} — student 3D design placeholder{% endif %}">
+        {% if image_exists(award.image) %}<img src="{{ url_for('static', filename=award.image) }}" alt="" loading="lazy">{% else %}<span class="trophy-plinth"></span>{{ trophy() }}{% endif %}
+      </div>
+      {% endif %}
+      <figcaption>Winners of the {{ award.year }} {{ award.title }}</figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

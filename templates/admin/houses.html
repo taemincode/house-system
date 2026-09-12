@@ -1,0 +1,9 @@
+{% extends 'admin/base.html' %}{% from 'admin/macros.html' import delete_form with context %}
+{% block content %}
+<div class="page-heading"><div><h1>Teachers</h1><p class="intro">Add teachers to their houses and choose each house head.</p></div></div>
+{% for house in teams %}
+<section class="panel"><div class="panel-heading"><h2>{{ house.name }}</h2><a class="button secondary" href="{{ url_for('admin.teacher_edit',house_id=house.id) }}">+ Add teacher</a></div>
+{% for teacher in house.teachers %}<article class="item compact"><div><h3>{{ teacher.name or 'Name not yet added' }}</h3><p class="muted">{{ 'Head of house' if teacher.is_head else 'Teacher' }}</p></div><div class="actions"><a class="button secondary" href="{{ url_for('admin.teacher_edit',house_id=house.id,index=loop.index0) }}">Edit</a>{{ delete_form('admin.teacher_delete','houses','Remove this teacher from ' ~ house.name ~ '?',{'house_id':house.id,'index':loop.index0}) }}</div></article>{% else %}<p class="empty">No teachers added yet.</p>{% endfor %}
+</section>
+{% endfor %}
+{% endblock %}

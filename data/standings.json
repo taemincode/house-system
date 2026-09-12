@@ -1,0 +1,37 @@
+{
+  "school_year": "2026/2027",
+  "snapshots": [
+    {
+      "date": "2026-09-04",
+      "physical_counted_on": "2026-09-04",
+      "totals": {
+        "rivers": 1261,
+        "castles": 1090,
+        "forests": 832,
+        "bridges": 865
+      },
+      "added": {
+        "rivers": 1261,
+        "castles": 1090,
+        "forests": 832,
+        "bridges": 865
+      }
+    },
+    {
+      "added": {
+        "rivers": 3333,
+        "castles": 33,
+        "forests": 33,
+        "bridges": 3333
+      },
+      "date": "2026-09-12",
+      "physical_counted_on": "2026-09-12",
+      "totals": {
+        "rivers": 4594,
+        "castles": 1123,
+        "forests": 865,
+        "bridges": 4198
+      }
+    }
+  ]
+}

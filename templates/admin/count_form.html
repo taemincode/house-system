@@ -1,0 +1,10 @@
+{% extends 'admin/base.html' %}{% from 'admin/macros.html' import tokens, field with context %}
+{% block content %}
+<div class="page-heading"><div><a class="back-link" href="{{ url_for('admin.standings') }}">← Coin counts</a><h1>{{ title }}</h1><p class="intro">{{ board.school_year }} · All fields are required.</p></div></div>
+<form method="post" class="editor" data-confirm="Are you sure you want to save these added coins? This may change the house rankings and the coin changes shown on the website.">{{ tokens('standings') }}
+<div class="notice">{% if editing %}Edit the number of coins added on this date. Saving replaces the previous addition and recalculates later totals.{% else %}Enter how many coins were added to each house. The website calculates the new totals automatically.{% endif %} Enter 0 for a house with no added coins. Only enter physical/event coins here. Digital awards are already included on the website; do not enter them again.</div>
+<div class="panel">{{ field('date','Entry date',count.get('date',today),type='date',required=true,max=today) }}<div class="form-grid">{% for house in houses %}{{ field(house.id,house.name ~ ' coins added',count.added.get(house.id,''),type='number',required=true,min=0,max=9007199254740991,help='Manual total: ' ~ (current_totals.get(house.id)|number) ~ ' coins.') }}{% endfor %}</div></div>
+<div class="notice warning"><strong>Please check before saving.</strong><p>Only include coins added for this entry. Check that these coins have not already been recorded. Saving changes the leaderboard.</p><label class="check"><input type="checkbox" name="confirmed" value="yes" required>I have checked the coins added for all four houses and want to save this entry.</label></div>
+<div class="form-actions"><a class="button secondary" href="{{ url_for('admin.standings') }}">Cancel</a><button class="button primary" type="submit">Save coins added</button></div>
+</form>
+{% endblock %}

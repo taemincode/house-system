@@ -1,0 +1,5 @@
+{% macro coin_total(total) -%}
+{% if total is not none -%}
+<span class="coin-count" data-count-up="{{ total }}" data-final="{{ total|number }}" aria-hidden="true"><span>{{ total|number }}</span></span><span class="sr-only">{{ total|number }}</span>
+{%- else -%}—{%- endif %}
+{%- endmacro %}

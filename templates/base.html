@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The four houses of Wroclaw International School. Explore house standings, events and our community.">
+  <title>{{ page_title }} · WIS Houses</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/coins.css') }}">
+  {% block styles %}{% endblock %}
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/coins.js') }}" defer></script>
+  {% block scripts %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="shell">
+    <div class="site-top">{% include 'partials/navigation.html' %}</div>
+    {% include 'partials/today.html' %}
+    <main id="main" tabindex="-1">{% block content %}{% endblock %}</main>
+    <footer class="site-footer">{% if site.demo_mode %}<p>Design preview · Scores, events and trophy awards are sample data.</p>{% else %}SA Project by <a href="https://taemincode.github.io/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">Taemin Park</a>{% endif %}</footer>
+  </div>
+</body>
+</html>

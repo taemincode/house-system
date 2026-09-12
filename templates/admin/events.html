@@ -1,0 +1,11 @@
+{% extends 'admin/base.html' %}{% from 'admin/macros.html' import delete_form with context %}
+{% block content %}
+<div class="page-heading"><div><h1>Events</h1><p class="intro">Manage upcoming events and completed results.</p></div><a class="button primary" href="{{ url_for('admin.event_edit') }}">+ New event</a></div>
+<div class="item-list">
+{% for event in events if event.date %}
+<article class="item"><div><span class="badge {{ event.status }}">{{ 'Upcoming' if event.status == 'upcoming' else 'Completed' }}</span><h2>{{ event.name }}</h2><p class="muted">{{ event.date|dateformat('%d %B %Y') }}</p></div><div class="actions"><a class="button secondary" href="{{ url_for('admin.event_edit', event_id=event.id) }}">Edit</a>{{ delete_form('admin.event_delete','events','Delete ' ~ event.name ~ '? Its event results will also be removed.', {'event_id':event.id}) }}</div></article>
+{% endfor %}
+{% for event in events if not event.date %}<article class="item"><div><span class="badge">Date to come</span><h2>{{ event.name }}</h2></div><div class="actions"><a class="button secondary" href="{{ url_for('admin.event_edit', event_id=event.id) }}">Edit</a>{{ delete_form('admin.event_delete','events','Delete ' ~ event.name ~ '?', {'event_id':event.id}) }}</div></article>{% endfor %}
+{% if not events %}<div class="empty">No events yet. Create your first event above.</div>{% endif %}
+</div>
+{% endblock %}

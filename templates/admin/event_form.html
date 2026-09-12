@@ -1,0 +1,21 @@
+{% extends 'admin/base.html' %}{% from 'admin/macros.html' import tokens, field with context %}
+{% block content %}
+<div class="page-heading"><div><a class="back-link" href="{{ url_for('admin.events') }}">← Events</a><h1>{{ title }}</h1><p class="intro">Fields marked * are required.</p></div></div>
+<form method="post" class="editor">{{ tokens('events') }}
+<div class="panel form-grid">
+{{ field('name','Event name', event.get('name',''), required=true) }}
+<label class="field"><span>Status *</span><select name="status" required data-switch="event-status"><option value="upcoming" {% if request.form.get('status',event.get('status','upcoming')) == 'upcoming' %}selected{% endif %}>Upcoming</option><option value="completed" {% if request.form.get('status',event.get('status')) == 'completed' %}selected{% endif %}>Completed</option></select></label>
+{{ field('date','Event date',event.get('date',''),type='date',help='Required for completed events. Leave blank if an upcoming date is not yet known.') }}
+{{ field('time','Time',event.get('time',''),type='time') }}
+<div class="full">{{ field('location','Location',event.get('location','')) }}</div>
+<label class="field full"><span>Description</span><textarea name="description" rows="4" maxlength="3000">{{ request.form.get('description',event.get('description','')) }}</textarea><small>Required for upcoming events.</small></label>
+</div>
+<fieldset class="panel" data-switch-group="event-status" data-switch-value="upcoming"><legend>Prizes</legend><p class="muted">Enter coins awarded for each place. Leave blank if prizes are not yet decided.</p><div class="form-grid four">
+{% for place in range(1,5) %}{% set prize = event.get('prizes',[])|selectattr('place','equalto',place)|first %}{{ field('prize_' ~ place, place|ordinal ~ ' place',prize.coins if prize else '',type='number',min=0,max=9007199254740991) }}{% endfor %}
+</div></fieldset>
+<fieldset class="panel" data-switch-group="event-status" data-switch-value="completed"><legend>Event results</legend><p class="muted">Choose a place and enter coins for every house. Ties are allowed. These awards do not automatically change the standings.</p>
+{% for house in houses %}{% set result = event.get('results',[])|selectattr('house','equalto',house.id)|first %}<div class="result-row"><strong>{{ house.name }}</strong><label class="field"><span>Place *</span><select name="place_{{ house.id }}" data-required><option value="">Choose place</option>{% for place in range(1,5) %}<option value="{{ place }}" {% if request.form.get('place_' ~ house.id,(result.place|string) if result else '') == place|string %}selected{% endif %}>{{ place|ordinal }}</option>{% endfor %}</select></label>{{ field('coins_' ~ house.id,'Coins',result.coins if result else '',type='number',min=0,max=9007199254740991) }}</div>{% endfor %}
+</fieldset>
+<div class="form-actions"><a class="button secondary" href="{{ url_for('admin.events') }}">Cancel</a><button class="button primary" type="submit">Save event</button></div>
+</form>
+{% endblock %}
