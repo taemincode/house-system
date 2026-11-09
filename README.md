@@ -88,7 +88,7 @@ For the first login on this workspace, the generated password is in `instance/ad
 .venv/bin/python app.py
 ```
 
-To set or reset the password, run this command and enter a password of at least 12 characters when prompted:
+To set or reset the password, run this command and enter a password of at least 8 characters when prompted:
 
 ```sh
 .venv/bin/flask --app app admin-password
@@ -123,7 +123,7 @@ Set `ADMIN_HTTPS=1` in production over HTTPS; it now protects both admin and tea
 
 ### Create accounts and give coins
 
-1. Sign in at `/admin`, open **Accounts → New account**, and enter a unique username, public teacher display name and a temporary password of 12–128 characters. Optionally select an existing teacher profile. That link is for reference; it does not restrict which houses the teacher may award. It matches the profile’s house and name; if that profile is later renamed or removed, relink it in the account editor.
+1. Sign in at `/admin`, open **Accounts → New account**, and enter a unique username, public teacher display name and a temporary password of 8–128 characters. Optionally select an existing teacher profile. That link is for reference; it does not restrict which houses the teacher may award. It matches the profile’s house and name; if that profile is later renamed or removed, relink it in the account editor.
 2. Share the credentials privately. The teacher opens **`/teacher/login`** directly, then must replace the temporary password before giving awards. Passwords are stored only as hashes. Teacher sessions last eight hours. Saving an account, deactivating it, or resetting its password ends existing sessions. Reactivation does not restore an old session.
 3. In **Give coins**, enter the student’s name, select a house, choose the number of coins and optionally enter a short reason. Default: 1 coin; limit: 10. Admin → **Coin settings** can set a maximum of 1–100 per submission.
 4. Submit once. A successful save returns a confirmation and a fresh form. Retrying the same form is safe: its unique key can create at most one award, including across workers. The server determines the teacher from the session. Never also give a physical coin for the same reward. Names and reasons are public, as the form explains.

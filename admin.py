@@ -554,8 +554,8 @@ def init_admin(app):
     def admin_password(generate):
         """Set or reset the admin password; this signs out existing sessions."""
         password = secrets.token_urlsafe(20) if generate else click.prompt('New admin password', hide_input=True, confirmation_prompt=True)
-        if len(password) < 12:
-            raise click.ClickException('Use at least 12 characters.')
+        if len(password) < 8:
+            raise click.ClickException('Use at least 8 characters.')
         with app.app_context():
             existing = read_auth()
         auth = {'password_hash': generate_password_hash(password), 'version': secrets.token_hex(16),

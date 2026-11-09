@@ -99,8 +99,8 @@ def clean(name, label, required=True, length=120):
 
 def password_value():
     value = request.form.get('password', '')
-    if not 12 <= len(value) <= 128:
-        raise ValueError('Use a password with 12–128 characters.')
+    if not 8 <= len(value) <= 128:
+        raise ValueError('Use a password with 8–128 characters.')
     return value
 
 

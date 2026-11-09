@@ -195,6 +195,15 @@ blockquote {
   letter-spacing:-.5px;
 }
 
+.grandmaster .quote-highlight {
+  color:inherit;
+  background:linear-gradient(transparent 15%, var(--lime) 15%, var(--lime) 90%, transparent 90%);
+  padding:0 .12em;
+  font-weight:700;
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+}
+
 .attribution {
   font-size:16px;
   margin-top:20px;

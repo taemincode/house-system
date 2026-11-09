@@ -12,6 +12,20 @@
         `${Math.floor(minutes / 60)} ${Math.floor(minutes / 60) === 1 ? 'hour' : 'hours'} ago`;
     });
   }
+  function updateNewBadge(article, timestamp, serverTime) {
+    let badge = article.querySelector('.coin-new-badge');
+    const age = serverTime - Number(timestamp);
+    if (age >= 0 && age < 600) {
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'coin-new-badge';
+        badge.textContent = 'n';
+        badge.setAttribute('aria-label', 'New award');
+        badge.title = 'New award · less than 10 minutes ago';
+        article.append(badge);
+      }
+    } else if (badge) badge.remove();
+  }
   function entry(item, emphasize = false) {
     const article = document.createElement('article');
     article.className = `coin-entry ${item.house}`;
@@ -61,6 +75,13 @@
     let index = 0, timer, busy = false;
     let period = daily.dataset.period, revision = daily.dataset.revision;
     let complete = !daily.dataset.next;
+    let serverOffset = Number(daily.dataset.serverTime) - Date.now() / 1000;
+    const currentTime = () => Date.now() / 1000 + serverOffset;
+    function updateCurrentBadge() {
+      if (stage.firstElementChild && items[index]) {
+        updateNewBadge(stage.firstElementChild, items[index].timestamp, currentTime());
+      }
+    }
 
     function schedule() {
       clearTimeout(timer);
@@ -77,7 +98,8 @@
         stage.firstElementChild.setAttribute('aria-roledescription', 'slide');
         stage.firstElementChild.setAttribute('aria-label', `Award ${index + 1} of ${items.length}`);
       }
-      updateTimes(stage, undefined, true);
+      updateTimes(stage, currentTime(), true);
+      updateCurrentBadge();
       schedule();
     }
     daily.addEventListener('mouseenter', () => clearTimeout(timer));
@@ -95,6 +117,8 @@
         const response = await fetch(url, {cache:'no-store'});
         if (!response.ok) throw new Error('Offline');
         const data = await response.json();
+        serverOffset = data.server_time - Date.now() / 1000;
+        updateCurrentBadge();
         if (updateBoard) updateSummary(data.summary, data.standings_html);
         updateTimes(stage, data.server_time, true);
         if (complete && data.revision === revision && data.period === period) return;
@@ -119,6 +143,7 @@
       finally { busy = false; }
     }
     setInterval(refreshToday, 25000);
+    setInterval(updateCurrentBadge, 1000);
     document.addEventListener('visibilitychange', () => {
       schedule();
       if (!document.hidden) refreshToday();

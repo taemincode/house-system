@@ -4,10 +4,12 @@
 .site-header .teacher-nav-link,.nav-logout {font-size:13px;font-weight:600;color:#555}
 .nav-logout {border:0;background:transparent;padding:12px 0;min-height:44px}
 .site-header nav form {margin:0}
+.brand .teacher-badge {display:inline-block;font-size:13px;font-weight:800;line-height:1.2;letter-spacing:0;background:var(--soft);padding:7px 10px;border-radius:5px;vertical-align:middle;margin-left:8px}
 .today-panel {margin-top:16px;background:var(--tint,var(--soft));border-radius:8px;overflow:hidden}
 .today-stage .coin-entry {width:100%;margin:0;align-items:center;gap:18px;padding:14px 20px;border:0;border-radius:0;background:transparent;min-height:80px}
 .today-stage .coin-amount {font-size:42px;font-weight:800;letter-spacing:-2px;line-height:1;min-width:64px;padding:0;background:transparent;text-align:left}
 .today-stage .coin-entry>div {min-width:0}
+.today-stage .coin-new-badge {display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;flex:0 0 22px;margin-left:auto;border-radius:50%;background:#c52232;color:#fff;font-size:14px;font-weight:800;line-height:1;letter-spacing:0}
 .today-stage .coin-entry p {font-size:14px;line-height:1.4}
 .today-stage .coin-entry time {display:block;margin-top:4px;font-size:12px;color:#141414;opacity:.75}
 .today-panel>.coin-empty {padding:14px 20px}

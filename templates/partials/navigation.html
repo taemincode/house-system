@@ -1,5 +1,5 @@
 <header class="site-header">
-  <a class="brand" href="{{ url_for('standings') }}">WIS HOUSES</a>
+  <a class="brand" href="{{ url_for('standings') }}">WIS HOUSES{% if teacher_account %} <span class="teacher-badge">Teacher</span>{% endif %}</a>
   <nav aria-label="Main navigation">
     <a href="{{ url_for('standings') }}" {% if active == 'standings' %}aria-current="page"{% endif %}>Standings</a>
     <details class="house-nav">

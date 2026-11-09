@@ -45,8 +45,8 @@ def account_edit(account_id=None):
             if profile and profile not in options:
                 raise ValueError('Choose a teacher profile from the list.')
             password = request.form.get('password', '')
-            if (not account or password) and not 12 <= len(password) <= 128:
-                raise ValueError('Use a temporary password with 12–128 characters.')
+            if (not account or password) and not 8 <= len(password) <= 128:
+                raise ValueError('Use a temporary password with 8–128 characters.')
             with transaction() as conn:
                 if account:
                     current = conn.execute('SELECT * FROM accounts WHERE id=?', (account_id,)).fetchone()
