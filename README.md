@@ -1,6 +1,6 @@
 # WIS Houses
 
-A website dedicated to the House System of Wrolcaw International School. Created by Taemin Park (MYP5) for Sevice as Action.
+A website dedicated to the House System of Wrolcaw International School. Created by Taemin Park (MYP5) for Service as Action.
 
 ## Features
 - House Leaderboard: shows the current points of each house and their rankings.
@@ -11,4 +11,4 @@ A website dedicated to the House System of Wrolcaw International School. Created
 
 ## Acknowledgements
 This project was developed with the help of Codex, an AI assistant.
-Special thanks to Mrs. Muszynska for her support.
+Special thanks to Ms. Muszynska for her support.
